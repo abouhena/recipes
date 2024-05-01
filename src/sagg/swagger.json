@@ -1,0 +1,271 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Recipe API",
+      "description": "API for managing recipes",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Local server"
+      }
+    ],
+    "paths": {
+      "/recipes": {
+        "get": {
+          "summary": "Get all recipes",
+          "responses": {
+            "200": {
+              "description": "List of recipes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Recipe"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new recipe",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Recipe created successfully"
+            }
+          }
+        }
+      },
+      "/recipes/{recipeId}": {
+        "get": {
+          "summary": "Get a recipe by ID",
+          "parameters": [
+            {
+              "name": "recipeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the recipe",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Recipe found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Recipe"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Recipe not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a recipe by ID",
+          "parameters": [
+            {
+              "name": "recipeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the recipe",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Recipe updated successfully"
+            },
+            "404": {
+              "description": "Recipe not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a recipe by ID",
+          "parameters": [
+            {
+              "name": "recipeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the recipe",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Recipe deleted successfully"
+            },
+            "404": {
+              "description": "Recipe not found"
+            }
+          }
+        }
+      },
+      "/recipes/savedRecipes/ids/{userId}": {
+        "get": {
+          "summary": "Get ids of saved recipes by user ID",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the user",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of saved recipe IDs",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      },
+      "/recipes/savedRecipes/{userId}": {
+        "get": {
+          "summary": "Get saved recipes by user ID",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the user",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of saved recipes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Recipe"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Recipe": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "instructions": {
+              "type": "string"
+            },
+            "imageUrl": {
+              "type": "string"
+            },
+            "cookingTime": {
+              "type": "number"
+            },
+            "nutrition": {
+              "type": "string"
+            },
+            "userOwner": {
+              "type": "string"
+            }
+          }
+        },
+        "RecipeInput": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "ingredients": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "instructions": {
+              "type": "string"
+            },
+            "imageUrl": {
+              "type": "string"
+            },
+            "cookingTime": {
+              "type": "number"
+            },
+            "nutrition": {
+              "type": "string"
+            },
+            "userOwner": {
+              "type": "string"
+            }
+          },
+          "required": ["name", "ingredients", "instructions", "imageUrl", "cookingTime", "nutrition", "userOwner"]
+        }
+      }
+    }
+  }
+  
